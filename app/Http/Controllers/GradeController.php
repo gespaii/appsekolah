@@ -14,7 +14,7 @@ class GradeController extends Controller
 
     public function create()
     {
-        return view('grades/create');  
+        return view('grades.create');  
     }
 
     public function store(Request $request)
@@ -26,41 +26,30 @@ class GradeController extends Controller
 
         Grade::create($request->all());
 
-        return redirect()->route('garde.index')->with('success','Berhasil Menambahkan.');
+        return redirect()->route('grade.index')->with('success','Berhasil Menambahkan.');
     }
 
-    public function edit($id) 
+    public function edit(Grade $grade) 
     {
-        $grades = Grade::find($id);
-        return view('grades.edit', [
-           'grades' => $grades,
-           'id' => $id,
-        ]);
+        return view('grades.edit', compact('grade'));
     }
 
-    public function update(Request $request, $id) 
+    public function update(Request $request, Product $product)
+
     {
-        $this->validate($request,[
-            'grades' => 'required',
+        $request->validate([
+            'grade' => 'required',
             'amount' => 'required',
         ]);
 
-        // $grades = Grade::find($id);
-        // $grades->grades = $request->grades;
-        // $grades->amount = $request->amount;
+        $grade->update($request->all());
+        return redirect()->route('grade.index')->with('success','Product updated successfully');
 
-        // $grades->save();
-        $grades = Grade::find($id);
-        $grades->update($request->all());
-
-        return redirect()->route('grade.index')->with('success', 'Berhasil Mengupdate Data.');
     }
 
-    public function destroy($id) 
+    public function destroy(Grade $grade) 
     {
-        $grades = Grade::find($id);
         $grades->delete();
-
-        return redirect()->back();
+        return redirect()->route('grade.index')->with('success', 'Kelas Berhasil dihapus');
     }
 }

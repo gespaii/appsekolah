@@ -26,10 +26,17 @@
                 @foreach ($grades as $no => $item)
                 <tr>
                     <td>{{ ++$no }}</td>
-                    <td>{{ $item->grades }}</td>
+                    <td>{{ $item->grade }}</td>
                     <td>{{ $item->amount }}</td>
-                    <td>Edit</td>
-                    <td>Delete</td>
+                    <td>
+                        <form action="{{ route('grade.destroy', $item->id) }}" onsubmit="return confirm('Apakah anda yakin?')" method="POST">
+                            {{-- <a class="btn btn-info" href="{{ route('grades.show', $item->id }}">Show</a> --}}
+                            <a class="btn btn-primary" href="{{ route('grade.edit', $item->id) }}">Edit</a>
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

@@ -8,14 +8,15 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
+     * 
      * @return void
      */
     public function up()
     {
+        Schema::dropIfExists('grades'); //ini solusinya, sudah saya close
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
-            $table->string('grades',50);
+            $table->string('grade', 50);
             $table->integer('amount');
             $table->timestamps();
         });

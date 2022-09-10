@@ -11,8 +11,19 @@
 <body>
     <div class="container">
         <h1>Tambah Data Kelas</h1>
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         <div>
             <form action="{{ route('grade.store') }}" method="post">
+            @csrf
                 <div class="mb-2">
                     <input type="text" name="grades" class="form-control" placeholder="Nama Kelas">
                 </div>
